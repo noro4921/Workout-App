@@ -9,7 +9,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
   const exercisesPerPage = 9;
   useEffect(() => {
     const fetchExercisesData = async () => {
-      const exercisesData = [];
+      let exercisesData = [];
 
       if (bodyPart === "all") {
         exercisesData = await fetchData(
