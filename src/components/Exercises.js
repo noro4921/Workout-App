@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Stack, Typography, Pagination } from "@mui/material";
 
 import { exerciseOptions, fetchData } from "../utils/fetchData";
@@ -23,6 +23,25 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
     window.scrollTo({ top: 1800, behavior: "smooth" });
   };
 
+  useEffect(() => {
+    const fetchExercisesData = async () => {
+      let exercisesData = [];
+
+      if (bodyPart === "all") {
+        exercisesData = await fetchData(
+          "https://exercisedb.p.rapidapi.com/exercises",
+          exerciseOptions
+        );
+      } else {
+        exercisesData = await fetchData(
+          `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`,
+          exerciseOptions
+        );
+      }
+      setExercises(exercisesData);
+    };
+    fetchExercisesData();
+  }, [bodyPart]);
   return (
     <Box
       id="exercises"
@@ -32,7 +51,15 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
       p="20px"
       mt="50px"
     >
-      <Typography variant="h3">Showing Results for BodyPart</Typography>
+      <Typography
+        variant="h3"
+        fontWeight="bold"
+        sx={{ fontSize: { lg: "44px", xs: "30px" } }}
+        mb="46px"
+        textAlign="center"
+      >
+        Showing Results for BodyPart
+      </Typography>
       <Stack
         direction="row"
         sx={{ gap: { lg: "110px", xs: "50px" } }}
