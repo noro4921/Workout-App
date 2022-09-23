@@ -7,6 +7,7 @@ import ExerciseCard from "./ExerciseCard";
 const Exercises = ({ exercises, setExercises, bodyPart }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const exercisesPerPage = 9;
+
   useEffect(() => {
     const fetchExercisesData = async () => {
       let exercisesData = [];
@@ -22,15 +23,16 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
           exerciseOptions
         );
       }
+
       setExercises(exercisesData);
     };
+
     fetchExercisesData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bodyPart]);
 
   const indexOfLastExercise = currentPage * exercisesPerPage;
-
   const indexofFirstExercise = indexOfLastExercise - exercisesPerPage;
-
   const currentExercises = exercises.slice(
     indexofFirstExercise,
     indexOfLastExercise
