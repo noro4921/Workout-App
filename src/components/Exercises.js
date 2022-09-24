@@ -8,6 +8,19 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const exercisesPerPage = 9;
 
+  const indexOfLastExercise = currentPage * exercisesPerPage;
+  const indexofFirstExercise = indexOfLastExercise - exercisesPerPage;
+  const currentExercises = exercises.slice(
+    indexofFirstExercise,
+    indexOfLastExercise
+  );
+
+  const paginate = (e, value) => {
+    setCurrentPage(value);
+
+    window.scrollTo({ top: 1800, behavior: "smooth" });
+  };
+
   useEffect(() => {
     const fetchExercisesData = async () => {
       let exercisesData = [];
@@ -23,26 +36,11 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
           exerciseOptions
         );
       }
-
       setExercises(exercisesData);
     };
 
     fetchExercisesData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bodyPart]);
-
-  const indexOfLastExercise = currentPage * exercisesPerPage;
-  const indexofFirstExercise = indexOfLastExercise - exercisesPerPage;
-  const currentExercises = exercises.slice(
-    indexofFirstExercise,
-    indexOfLastExercise
-  );
-
-  const paginate = (e, value) => {
-    setCurrentPage(value);
-
-    window.scrollTo({ top: 1800, behavior: "smooth" });
-  };
 
   return (
     <Box
